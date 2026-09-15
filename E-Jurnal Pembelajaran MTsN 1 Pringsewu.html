@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jurnal Pembelajaran Guru — MTsN 1 Pringsewu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2e27;
+    --green-deep:#153A2E;
+    --green-mid:#1B4D3E;
+    --green-soft:#2E6350;
+    --paper:#FAF5E9;
+    --paper-raised:#FFFDF7;
+    --paper-line:#E4DCC6;
+    --sage:#DCE7DA;
+    --sage-dark:#B9CDB8;
+    --gold:#A9793F;
+    --gold-soft:#EFE0C8;
+    --red:#9C3B34;
+    --red-soft:#F4E0DD;
+    --shadow: 0 1px 2px rgba(21,58,46,0.08), 0 4px 14px rgba(21,58,46,0.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--sage);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255,255,255,0.35), transparent 45%);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+  }
+  button{font-family:inherit;}
+  ::selection{background:var(--gold-soft);}
+ 
+  /* ---------- layout shell ---------- */
+  .app{
+    max-width:1080px;
+    margin:0 auto;
+    padding:28px 20px 60px;
+  }
+ 
+  .masthead{
+    background:linear-gradient(180deg, var(--green-mid), var(--green-deep));
+    color:#F3EFE2;
+    border-radius:14px;
+    padding:26px 28px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .masthead::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .emblem{
+    width:52px;height:52px;flex:none;
+    border:1.5px solid rgba(243,239,226,0.55);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:#FBF8EF;
+    overflow:hidden;
+  }
+  .emblem svg{width:28px;height:28px;color:var(--green-deep);}
+  .emblem img{width:100%;height:100%;object-fit:contain;padding:5px;}
+  .masthead-titles p.eyebrow-none{margin:0;}
+  .masthead-titles h1{font-size:1.5rem;color:#FBF8EF;letter-spacing:0.2px;}
+  .masthead-titles p{margin:4px 0 0;font-size:0.92rem;color:#CFE0D1;}
+  .masthead-meta{
+    margin-left:auto;
+    text-align:right;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:#CFE0D1;
+    line-height:1.5;
+  }
+ 
+  /* ---------- tabs styled as ledger index tabs ---------- */
+  .tabs{
+    display:flex;
+    gap:6px;
+    margin-top:18px;
+    padding:0 6px;
+  }
+  .tab{
+    border:none;
+    cursor:pointer;
+    padding:12px 20px 11px;
+    background:var(--sage-dark);
+    color:var(--green-deep);
+    font-size:0.92rem;
+    font-weight:500;
+    border-radius:10px 10px 0 0;
+    position:relative;
+    top:2px;
+    transition:background .15s ease, color .15s ease, top .15s ease;
+  }
+  .tab:hover{background:#CBDECA;}
+  .tab.active{
+    background:var(--paper-raised);
+    color:var(--green-deep);
+    top:0;
+    box-shadow:0 -2px 8px rgba(21,58,46,0.08);
+    font-weight:600;
+  }
+ 
+  .panel{
+    background:var(--paper-raised);
+    border-radius:0 12px 12px 12px;
+    box-shadow:var(--shadow);
+    padding:28px;
+    min-height:420px;
+  }
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+ 
+  /* ---------- generic building blocks ---------- */
+  .section-title{
+    font-size:1.05rem;
+    color:var(--green-deep);
+    margin-bottom:14px;
+  }
+  .card{
+    background:var(--paper);
+    border:1px solid var(--paper-line);
+    border-radius:12px;
+    padding:20px;
+  }
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  @media (max-width:720px){
+    .grid-2, .grid-3{grid-template-columns:1fr;}
+  }
+  label{
+    display:block;
+    font-size:0.8rem;
+    font-weight:600;
+    color:var(--green-deep);
+    margin-bottom:6px;
+  }
+  input[type=text], input[type=date], input[type=number], select, textarea{
+    width:100%;
+    padding:9px 11px;
+    border:1px solid var(--paper-line);
+    border-radius:8px;
+    background:#fff;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.92rem;
+    color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:2px solid var(--green-soft);
+    outline-offset:1px;
+    border-color:var(--green-soft);
+  }
+  textarea{resize:vertical;min-height:64px;}
+  .field{margin-bottom:14px;}
+ 
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    border:none;border-radius:8px;
+    padding:10px 18px;
+    font-size:0.88rem;font-weight:600;
+    cursor:pointer;
+    transition:filter .15s ease, transform .05s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--green-mid);color:#fff;}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{background:transparent;color:var(--green-deep);border:1px solid var(--sage-dark);}
+  .btn-ghost:hover{background:var(--sage);}
+  .btn-danger{background:var(--red-soft);color:var(--red);}
+  .btn-danger:hover{filter:brightness(0.97);}
+  .btn-gold{background:var(--gold);color:#fff;}
+  .btn-gold:hover{filter:brightness(1.06);}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  .icon{width:15px;height:15px;flex:none;}
+ 
+  /* ---------- entry list (ledger table) ---------- */
+  .filters{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;
+    margin:22px 0 14px;
+  }
+  .filters .field{margin-bottom:0;min-width:150px;flex:1;}
+  .filters input[type=text]{min-width:180px;}
+ 
+  .ledger{
+    border-top:2px solid var(--green-deep);
+    border-bottom:2px solid var(--green-deep);
+  }
+  .ledger table{width:100%;border-collapse:collapse;}
+  .ledger thead th{
+    text-align:left;
+    font-size:0.72rem;
+    letter-spacing:0.02em;
+    color:var(--green-deep);
+    font-weight:600;
+    padding:10px 12px;
+    border-bottom:1px solid var(--paper-line);
+    background:var(--sage);
+  }
+  .ledger tbody td{
+    padding:12px;
+    font-size:0.86rem;
+    border-bottom:1px solid var(--paper-line);
+    vertical-align:top;
+  }
+  .ledger tbody tr:hover{background:#FDFBF3;}
+  .cell-date{font-family:'IBM Plex Mono', monospace;font-size:0.8rem;white-space:nowrap;}
+  .tag{
+    display:inline-block;padding:3px 9px;border-radius:20px;
+    background:var(--sage);color:var(--green-deep);
+    font-size:0.74rem;font-weight:600;white-space:nowrap;
+  }
+  .row-actions{display:flex;gap:6px;}
+  .icon-btn{
+    border:none;background:transparent;cursor:pointer;
+    padding:6px;border-radius:6px;color:var(--green-deep);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-btn:hover{background:var(--sage);}
+  .icon-btn.danger:hover{background:var(--red-soft);color:var(--red);}
+  .empty-state{
+    text-align:center;padding:40px 20px;color:#6C7A70;font-size:0.92rem;
+  }
+  .empty-state svg{width:36px;height:36px;margin-bottom:10px;opacity:0.6;}
+ 
+  /* ---------- kelola kelas/mapel ---------- */
+  .manage-list{list-style:none;margin:14px 0 0;padding:0;}
+  .manage-list li{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 4px;border-bottom:1px solid var(--paper-line);
+    font-size:0.9rem;
+  }
+  .manage-list li span{flex:1;}
+  .manage-list li input{flex:1;padding:6px 8px;font-size:0.88rem;}
+  .add-row{display:flex;gap:8px;margin-top:16px;}
+  .add-row input{flex:1;}
+  .count-pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;color:var(--gold);background:var(--gold-soft);
+    padding:2px 8px;border-radius:20px;margin-left:6px;
+  }
+ 
+  /* ---------- cetak tab ---------- */
+  .print-preview-wrap{
+    margin-top:20px;
+    border:1px dashed var(--paper-line);
+    border-radius:12px;
+    padding:18px;
+    background:#fff;
+    max-height:420px;
+    overflow:auto;
+  }
+  .kop{
+    text-align:center;border-bottom:3px double var(--ink);padding-bottom:10px;margin-bottom:16px;
+  }
+  .kop .k1{font-size:0.78rem;letter-spacing:0.04em;}
+  .kop .k2{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;margin-top:2px;}
+  .kop .k3{font-size:0.72rem;color:#555;margin-top:2px;}
+  .print-title{text-align:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin:14px 0 4px;text-decoration:underline;text-underline-offset:4px;}
+  .print-meta{text-align:center;font-size:0.78rem;color:#555;margin-bottom:14px;}
+  .print-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+  .print-table th,.print-table td{border:1px solid #999;padding:6px 8px;text-align:left;vertical-align:top;}
+  .print-table th{background:#EFEAD9;}
+  .sign-block{display:flex;justify-content:space-between;margin-top:34px;font-size:0.8rem;}
+  .sign-block .sign{width:44%;text-align:center;}
+  .sign-block .sign .space{height:56px;}
+ 
+  /* toast */
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--green-deep);color:#F3EFE2;padding:11px 20px;border-radius:9px;
+    font-size:0.86rem;box-shadow:var(--shadow);opacity:0;pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;z-index:50;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+ 
+  .helper-text{font-size:0.78rem;color:#7A8A7F;margin-top:4px;}
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(21,42,34,0.45);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:40;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    background:var(--paper-raised);border-radius:14px;max-width:400px;width:100%;
+    padding:22px;box-shadow:var(--shadow);
+  }
+  .modal-box h3{margin-bottom:8px;}
+  .modal-box p{font-size:0.88rem;color:#555;margin:0 0 18px;}
+ 
+  #print-area{display:none;}
+ 
+  @media print{
+    body{background:#fff;}
+    .app{display:none;}
+    #print-area{display:block;padding:10px;}
+  }
+ 
+  @media (max-width:640px){
+    .masthead{flex-wrap:wrap;}
+    .masthead-meta{margin-left:0;text-align:left;}
+    .ledger{border:none;}
+    .ledger thead{display:none;}
+    .ledger tbody tr{
+      display:block;border:1px solid var(--paper-line);border-radius:10px;margin-bottom:10px;padding:10px;
+    }
+    .ledger tbody td{
+      display:flex;justify-content:space-between;gap:10px;border:none;padding:6px 2px;text-align:right;
+    }
+    .ledger tbody td::before{content:attr(data-label);font-weight:600;color:var(--green-deep);text-align:left;font-size:0.72rem;}
+    .row-actions{justify-content:flex-end;}
+  }
+</style>
+</head>
+<body>
+ 
+<div class="app">
+  <header class="masthead">
+    <div class="emblem" id="logoEmblem">
+      <svg id="defaultEmblemIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M3 5.5C5 4.3 8 4 12 5.5C16 4 19 4.3 21 5.5V18C19 16.8 16 16.5 12 18C8 16.5 5 16.8 3 18V5.5Z"/>
+        <path d="M12 5.5V18"/>
+      </svg>
+      <img id="logoImg" src="" alt="Logo Kementerian Agama" style="display:none;">
+    </div>
+    <div class="masthead-titles">
+      <h1>Jurnal Pembelajaran Guru</h1>
+      <p>MTsN 1 Pringsewu</p>
+    </div>
+    <div class="masthead-meta" id="mastheadDate"></div>
+  </header>
+ 
+  <nav class="tabs">
+    <button class="tab active" data-tab="jurnal">Buku Jurnal</button>
+    <button class="tab" data-tab="kelola">Kelas &amp; Mapel</button>
+    <button class="tab" data-tab="cetak">Cetak</button>
+    <button class="tab" data-tab="sinkron">Sinkronisasi</button>
+  </nav>
+ 
+  <main class="panel">
+ 
+    <!-- TAB: JURNAL -->
+    <section id="tab-jurnal" class="tab-panel active">
+      <h2 class="section-title" id="formModeTitle">Tulis entri jurnal baru</h2>
+      <form class="card" id="entryForm">
+        <div class="grid-3">
+          <div class="field">
+            <label for="f_tanggal">Tanggal</label>
+            <input type="date" id="f_tanggal" required>
+          </div>
+          <div class="field">
+            <label for="f_kelas">Kelas</label>
+            <select id="f_kelas" required></select>
+          </div>
+          <div class="field">
+            <label for="f_mapel">Mata pelajaran</label>
+            <select id="f_mapel" required></select>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="field">
+            <label for="f_jam">Jam ke</label>
+            <input type="text" id="f_jam" placeholder="mis. 3-4" required>
+          </div>
+          <div class="field">
+            <label for="f_guru">Nama guru</label>
+            <input type="text" id="f_guru" placeholder="Nama guru pengampu" required>
+          </div>
+          <div class="field">
+            <label for="f_kehadiran">Siswa hadir</label>
+            <input type="text" id="f_kehadiran" placeholder="mis. 30 dari 32 siswa">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f_materi">Materi / kompetensi dasar</label>
+          <textarea id="f_materi" required placeholder="Tuliskan materi atau kompetensi dasar yang diajarkan"></textarea>
+        </div>
+        <div class="field">
+          <label for="f_kegiatan">Kegiatan pembelajaran</label>
+          <textarea id="f_kegiatan" required placeholder="Ringkasan kegiatan, metode, atau media yang digunakan"></textarea>
+        </div>
+        <div class="field">
+          <label for="f_catatan">Catatan / hambatan (opsional)</label>
+          <textarea id="f_catatan" placeholder="Kendala, tindak lanjut, atau catatan lain"></textarea>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Simpan entri
+          </button>
+          <button type="button" class="btn btn-ghost" id="cancelEditBtn" style="display:none;">Batal edit</button>
+        </div>
+      </form>
+ 
+      <div class="filters">
+        <div class="field">
+          <label for="filterKelas">Kelas</label>
+          <select id="filterKelas"><option value="">Semua kelas</option></select>
+        </div>
+        <div class="field">
+          <label for="filterMapel">Mata pelajaran</label>
+          <select id="filterMapel"><option value="">Semua mapel</option></select>
+        </div>
+        <div class="field">
+          <label for="filterCari">Cari materi</label>
+          <input type="text" id="filterCari" placeholder="Ketik kata kunci...">
+        </div>
+      </div>
+ 
+      <div class="ledger" id="ledgerWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Kelas</th>
+              <th>Mapel</th>
+              <th>Jam</th>
+              <th>Materi</th>
+              <th>Guru</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="entryTableBody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h4"/></svg>
+        <div>Belum ada entri jurnal. Isi formulir di atas untuk mulai mencatat.</div>
+      </div>
+    </section>
+ 
+    <!-- TAB: KELOLA -->
+    <section id="tab-kelola" class="tab-panel">
+      <h2 class="section-title">Logo pada kop dokumen</h2>
+      <div class="card" style="margin-bottom:22px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div id="logoPreviewBox" style="width:72px;height:72px;border:1px dashed var(--paper-line);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;">
+          <span id="logoPreviewEmpty" style="font-size:0.7rem;color:#9AA79E;text-align:center;padding:4px;">Belum ada logo</span>
+          <img id="logoPreviewImg" src="" alt="Pratinjau logo" style="width:100%;height:100%;object-fit:contain;padding:6px;display:none;">
+        </div>
+        <div style="flex:1;min-width:220px;">
+          <p class="helper-text" style="margin:0 0 10px;font-size:0.85rem;">
+            Unggah logo Kementerian Agama (Ikhlas Beramal) atau logo madrasah. Logo ini otomatis muncul di bagian atas aplikasi dan pada kop saat dicetak ke PDF.
+            Gunakan file resmi (PNG/JPG dengan latar transparan atau putih) agar hasilnya rapi.
+          </p>
+          <div class="btn-row" style="margin-top:0;">
+            <label class="btn btn-primary" for="logoFileInput" style="cursor:pointer;margin:0;">Unggah logo</label>
+            <input type="file" id="logoFileInput" accept="image/png,image/jpeg,image/svg+xml" style="display:none;">
+            <button class="btn btn-ghost" id="removeLogoBtn">Hapus logo</button>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="grid-2">
+        <div>
+          <h2 class="section-title">Daftar kelas <span class="count-pill" id="kelasCount">0</span></h2>
+          <div class="card">
+            <div class="add-row">
+              <input type="text" id="newKelasInput" placeholder="Tambah kelas, mis. VII D">
+              <button class="btn btn-primary" id="addKelasBtn">Tambah</button>
+            </div>
+            <ul class="manage-list" id="kelasList"></ul>
+            <p class="helper-text">Ubah nama langsung pada kolom, lalu klik simpan pada baris tersebut.</p>
+          </div>
+        </div>
+        <div>
+          <h2 class="section-title">Daftar mata pelajaran <span class="count-pill" id="mapelCount">0</span></h2>
+          <div class="card">
+            <div class="add-row">
+              <input type="text" id="newMapelInput" placeholder="Tambah mapel, mis. Bahasa Lampung">
+              <button class="btn btn-primary" id="addMapelBtn">Tambah</button>
+            </div>
+            <ul class="manage-list" id="mapelList"></ul>
+            <p class="helper-text">Daftar ini otomatis muncul sebagai pilihan saat menulis jurnal.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- TAB: CETAK -->
+    <section id="tab-cetak" class="tab-panel">
+      <h2 class="section-title">Cetak jurnal ke PDF</h2>
+      <div class="card">
+        <div class="grid-3">
+          <div class="field">
+            <label for="p_dari">Dari tanggal</label>
+            <input type="date" id="p_dari">
+          </div>
+          <div class="field">
+            <label for="p_sampai">Sampai tanggal</label>
+            <input type="date" id="p_sampai">
+          </div>
+          <div class="field">
+            <label for="p_kelas">Kelas</label>
+            <select id="p_kelas"><option value="">Semua kelas</option></select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="p_mapel">Mata pelajaran</label>
+            <select id="p_mapel"><option value="">Semua mapel</option></select>
+          </div>
+        </div>
+        <h3 style="font-size:0.9rem;color:var(--green-deep);margin:18px 0 10px;">Penanda tangan pada dokumen cetak</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="p_guru_nama">Nama guru mata pelajaran</label>
+            <input type="text" id="p_guru_nama" placeholder="mis. Siti Aminah, S.Pd.">
+          </div>
+          <div class="field">
+            <label for="p_guru_nip">NIP guru mata pelajaran</label>
+            <input type="text" id="p_guru_nip" placeholder="mis. 198501012010012001">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="p_kepala_nama">Nama kepala madrasah</label>
+            <input type="text" id="p_kepala_nama" placeholder="mis. Ahmad Fauzi, S.Pd., M.Pd.">
+          </div>
+          <div class="field">
+            <label for="p_kepala_nip">NIP kepala madrasah</label>
+            <input type="text" id="p_kepala_nip" placeholder="mis. 197005152000031004">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-gold" id="previewBtn">Tampilkan pratinjau</button>
+          <button class="btn btn-primary" id="printBtn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18h12v4H6z"/><path d="M6 14H4a2 2 0 01-2-2v-3a2 2 0 012-2h16a2 2 0 012 2v3a2 2 0 01-2 2h-2"/></svg>
+            Cetak / Simpan PDF
+          </button>
+        </div>
+        <p class="helper-text">Nama dan NIP di atas akan diingat untuk pencetakan berikutnya.</p>
+        <div class="print-preview-wrap" id="previewWrap" style="display:none;"></div>
+      </div>
+    </section>
+ 
+    <!-- TAB: SINKRONISASI -->
+    <section id="tab-sinkron" class="tab-panel">
+      <h2 class="section-title">Sinkronisasi dengan Google Sheet</h2>
+      <div class="card">
+        <p class="helper-text" style="margin-top:0;font-size:0.85rem;">
+          Data jurnal, kelas, dan mata pelajaran bisa disimpan cadangannya ke Google Sheet, dan bisa diambil kembali dari perangkat mana pun.
+          Ini butuh sekali setup dengan Google Apps Script — lihat langkah-langkahnya di bawah.
+        </p>
+        <div class="field" style="margin-top:16px;">
+          <label for="syncUrlInput">URL Web App Google Apps Script</label>
+          <input type="text" id="syncUrlInput" placeholder="https://script.google.com/macros/s/xxxxx/exec">
+          <p class="helper-text" id="syncUrlStatus">Belum diatur.</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="saveSyncUrlBtn">Simpan URL</button>
+          <button class="btn btn-gold" id="pushSyncBtn">Unggah ke Google Sheet</button>
+          <button class="btn btn-primary" id="pullSyncBtn">Ambil dari Google Sheet</button>
+        </div>
+        <p class="helper-text" id="syncStatusText"></p>
+      </div>
+ 
+      <h2 class="section-title" style="margin-top:26px;">Cara setup (sekali saja)</h2>
+      <div class="card">
+        <ol style="margin:0;padding-left:20px;font-size:0.88rem;line-height:1.85;">
+          <li>Buka <strong>sheets.google.com</strong>, buat spreadsheet baru — beri nama misalnya "Jurnal Pembelajaran Guru".</li>
+          <li>Di spreadsheet itu, klik menu <strong>Extensions &rarr; Apps Script</strong>.</li>
+          <li>Hapus semua kode contoh di editor, lalu tempel skrip yang sudah disiapkan (klik "Salin kode Apps Script" di bawah).</li>
+          <li>Klik <strong>Deploy &rarr; New deployment</strong>. Pilih tipe <strong>Web app</strong>.</li>
+          <li>Pada "Execute as" pilih <strong>Me</strong>, dan pada "Who has access" pilih <strong>Anyone</strong>, lalu klik <strong>Deploy</strong> dan izinkan aksesnya.</li>
+          <li>Salin URL Web App yang muncul (diakhiri <code>/exec</code>), lalu tempel ke kolom URL di atas dan klik <strong>Simpan URL</strong>.</li>
+          <li>Klik <strong>Unggah ke Google Sheet</strong> untuk mengirim data pertama kali. Setelah itu, gunakan <strong>Ambil dari Google Sheet</strong> di perangkat lain untuk menariknya.</li>
+        </ol>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="copyScriptBtn">Salin kode Apps Script</button>
+        </div>
+        <p class="helper-text">Setiap "Unggah" akan menimpa seluruh isi sheet dengan data di aplikasi ini. Setiap "Ambil" akan menimpa data di aplikasi ini dengan isi sheet.</p>
+      </div>
+    </section>
+ 
+  </main>
+</div>
+ 
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-box">
+    <h3 id="confirmTitle">Hapus data?</h3>
+    <p id="confirmText">Tindakan ini tidak dapat dibatalkan.</p>
+    <div class="btn-row">
+      <button class="btn btn-danger" id="confirmYes">Ya, hapus</button>
+      <button class="btn btn-ghost" id="confirmNo">Batal</button>
+    </div>
+  </div>
+</div>
+ 
+<div id="toast"></div>
+<div id="print-area"></div>
+ 
+<script>
+(function(){
+  "use strict";
+ 
+  var HARI = ['Minggu','Senin','Selasa','Rabu','Kamis',"Jum'at",'Sabtu'];
+  var STORAGE_KEY = 'jurnal-guru-state-v1';
+ 
+  var state = {
+    kelas: ['VII A','VII B','VIII A','VIII B','IX A','IX B'],
+    mapel: ['Al-Qur\'an Hadits','Akidah Akhlak','Fikih','Sejarah Kebudayaan Islam','Bahasa Arab','Bahasa Indonesia','Matematika','IPA','IPS','Bahasa Inggris','PPKn','Seni Budaya','PJOK'],
+    entries: [],
+    editingId: null,
+    syncUrl: '',
+    logo: ''
+  };
+  var SYNC_URL_KEY = 'jurnal-guru-sync-url-v1';
+  var LOGO_KEY = 'jurnal-guru-logo-v1';
+ 
+  var loaded = false;
+ 
+  function uid(){ return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+ 
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+ 
+  function fmtTanggal(iso){
+    if(!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    if(isNaN(d)) return iso;
+    var bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    return HARI[d.getDay()] + ', ' + d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  function fmtTanggalSingkat(iso){
+    if(!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    if(isNaN(d)) return iso;
+    return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+  }
+ 
+  function escapeHtml(str){
+    return String(str == null ? '' : str).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+ 
+  function showToast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._tm);
+    showToast._tm = setTimeout(function(){ t.classList.remove('show'); }, 2400);
+  }
+ 
+  /* ---------------- lapisan penyimpanan (localStorage) ----------------
+     Catatan: aplikasi ini adalah file HTML mandiri yang diunduh dan dibuka
+     langsung di browser, sehingga memakai localStorage bawaan browser —
+     bukan API penyimpanan artifact yang hanya aktif saat file dijalankan
+     di dalam panel chat. Data tersimpan per-browser di perangkat ini. */
+  var localStore = {
+    get: function(key){
+      try{
+        var v = window.localStorage.getItem(key);
+        return Promise.resolve(v === null ? null : { key: key, value: v });
+      }catch(err){
+        return Promise.reject(err);
+      }
+    },
+    set: function(key, value){
+      try{
+        window.localStorage.setItem(key, value);
+        return Promise.resolve({ key: key, value: value });
+      }catch(err){
+        return Promise.reject(err);
+      }
+    },
+    delete: function(key){
+      try{
+        window.localStorage.removeItem(key);
+        return Promise.resolve({ key: key, deleted: true });
+      }catch(err){
+        return Promise.reject(err);
+      }
+    }
+  };
+ 
+  /* ---------------- persistence ---------------- */
+  async function saveState(){
+    try{
+      var payload = JSON.stringify({ kelas: state.kelas, mapel: state.mapel, entries: state.entries });
+      var res = await localStore.set(STORAGE_KEY, payload);
+      if(!res){ showToast('Gagal menyimpan data.'); }
+    }catch(err){
+      console.error('Storage error saat menyimpan:', err);
+      showToast('Gagal menyimpan data. Browser mungkin memblokir penyimpanan lokal (mode privat, atau file dibuka langsung dari sistem file tanpa izin).');
+    }
+  }
+ 
+  async function loadState(){
+    try{
+      var res = await localStore.get(STORAGE_KEY);
+      if(res && res.value){
+        var data = JSON.parse(res.value);
+        if(Array.isArray(data.kelas) && data.kelas.length) state.kelas = data.kelas;
+        if(Array.isArray(data.mapel) && data.mapel.length) state.mapel = data.mapel;
+        if(Array.isArray(data.entries)) state.entries = data.entries;
+      }
+    }catch(err){
+      // Kunci belum ada / gagal dibaca — pakai data awal
+      console.log('Belum ada data tersimpan, menggunakan data awal.');
+    }
+    loaded = true;
+  }
+ 
+  /* ---------------- logo Kemenag / madrasah ---------------- */
+  function applyLogoToDom(){
+    var img = document.getElementById('logoImg');
+    var defaultIcon = document.getElementById('defaultEmblemIcon');
+    var previewImg = document.getElementById('logoPreviewImg');
+    var previewEmpty = document.getElementById('logoPreviewEmpty');
+    if(state.logo){
+      img.src = state.logo;
+      img.style.display = 'block';
+      defaultIcon.style.display = 'none';
+      previewImg.src = state.logo;
+      previewImg.style.display = 'block';
+      previewEmpty.style.display = 'none';
+    }else{
+      img.style.display = 'none';
+      defaultIcon.style.display = 'block';
+      previewImg.style.display = 'none';
+      previewEmpty.style.display = 'block';
+    }
+  }
+ 
+  async function loadLogo(){
+    try{
+      var res = await localStore.get(LOGO_KEY);
+      if(res && res.value){ state.logo = res.value; }
+    }catch(err){
+      // belum ada logo tersimpan
+    }
+    applyLogoToDom();
+  }
+ 
+  async function saveLogo(dataUrl){
+    try{
+      var res = await localStore.set(LOGO_KEY, dataUrl);
+      if(!res){ showToast('Gagal menyimpan logo.'); return; }
+      state.logo = dataUrl;
+      applyLogoToDom();
+      showToast('Logo berhasil disimpan.');
+    }catch(err){
+      console.error(err);
+      showToast('Gagal menyimpan logo.');
+    }
+  }
+ 
+  async function deleteLogo(){
+    try{
+      await localStore.delete(LOGO_KEY);
+    }catch(err){
+      // tidak ada yang perlu dihapus
+    }
+    state.logo = '';
+    applyLogoToDom();
+    showToast('Logo dihapus.');
+  }
+ 
+  function resizeImageFile(file, maxDim){
+    return new Promise(function(resolve, reject){
+      var reader = new FileReader();
+      reader.onerror = function(){ reject(new Error('Gagal membaca file.')); };
+      reader.onload = function(){
+        if(file.type === 'image/svg+xml'){
+          resolve(reader.result);
+          return;
+        }
+        var image = new Image();
+        image.onerror = function(){ reject(new Error('Gagal memuat gambar.')); };
+        image.onload = function(){
+          var w = image.width, h = image.height;
+          if(w > maxDim || h > maxDim){
+            var ratio = Math.min(maxDim / w, maxDim / h);
+            w = Math.round(w * ratio);
+            h = Math.round(h * ratio);
+          }
+          var canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(image, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/png'));
+        };
+        image.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+ 
+  document.getElementById('logoFileInput').addEventListener('change', async function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 4 * 1024 * 1024){
+      showToast('Ukuran file terlalu besar. Gunakan gambar di bawah 4MB.');
+      e.target.value = '';
+      return;
+    }
+    try{
+      var dataUrl = await resizeImageFile(file, 300);
+      await saveLogo(dataUrl);
+    }catch(err){
+      console.error(err);
+      showToast('Gagal memproses gambar logo.');
+    }
+    e.target.value = '';
+  });
+ 
+  document.getElementById('removeLogoBtn').addEventListener('click', deleteLogo);
+ 
+  /* ---------------- sinkronisasi Google Sheet ---------------- */
+  async function loadSyncUrl(){
+    try{
+      var res = await localStore.get(SYNC_URL_KEY);
+      if(res && res.value){
+        state.syncUrl = res.value;
+        document.getElementById('syncUrlInput').value = state.syncUrl;
+        document.getElementById('syncUrlStatus').textContent = 'Tersimpan.';
+      }
+    }catch(err){
+      // belum pernah diatur
+    }
+  }
+ 
+  async function saveSyncUrl(url){
+    try{
+      var res = await localStore.set(SYNC_URL_KEY, url);
+      if(!res){ showToast('Gagal menyimpan URL.'); return; }
+      state.syncUrl = url;
+      document.getElementById('syncUrlStatus').textContent = 'Tersimpan.';
+      showToast('URL Google Sheet disimpan.');
+    }catch(err){
+      console.error(err);
+      showToast('Gagal menyimpan URL.');
+    }
+  }
+ 
+  document.getElementById('saveSyncUrlBtn').addEventListener('click', function(){
+    var url = document.getElementById('syncUrlInput').value.trim();
+    if(!url){ showToast('Isi URL Web App terlebih dahulu.'); return; }
+    saveSyncUrl(url);
+  });
+ 
+  document.getElementById('copyScriptBtn').addEventListener('click', function(){
+    navigator.clipboard.writeText(APPS_SCRIPT_CODE).then(function(){
+      showToast('Kode Apps Script disalin. Tempel di editor script.google.com.');
+    }).catch(function(){
+      showToast('Gagal menyalin. Salin manual dari file APPS_SCRIPT.gs yang disertakan.');
+    });
+  });
+ 
+  function setSyncStatus(msg, isError){
+    var el = document.getElementById('syncStatusText');
+    el.textContent = msg;
+    el.style.color = isError ? '#9C3B34' : '#7A8A7F';
+  }
+ 
+  document.getElementById('pushSyncBtn').addEventListener('click', async function(){
+    var url = state.syncUrl;
+    if(!url){ showToast('Simpan URL Web App terlebih dahulu.'); return; }
+    setSyncStatus('Mengunggah data ke Google Sheet...');
+    try{
+      var payload = { kelas: state.kelas, mapel: state.mapel, entries: state.entries };
+      var res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      setSyncStatus('Berhasil diunggah ke Google Sheet.');
+      showToast('Data berhasil diunggah ke Google Sheet.');
+    }catch(err){
+      console.error(err);
+      setSyncStatus('Gagal mengunggah. Periksa kembali URL dan pengaturan akses Web App.', true);
+      showToast('Gagal mengunggah ke Google Sheet.');
+    }
+  });
+ 
+  document.getElementById('pullSyncBtn').addEventListener('click', async function(){
+    var url = state.syncUrl;
+    if(!url){ showToast('Simpan URL Web App terlebih dahulu.'); return; }
+    setSyncStatus('Mengambil data dari Google Sheet...');
+    try{
+      var res = await fetch(url, { method: 'GET' });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      var data = await res.json();
+      if(Array.isArray(data.kelas) && data.kelas.length) state.kelas = data.kelas;
+      if(Array.isArray(data.mapel) && data.mapel.length) state.mapel = data.mapel;
+      if(Array.isArray(data.entries)) state.entries = data.entries;
+      await saveState();
+      refreshAllSelects();
+      renderManageLists();
+      renderEntryTable();
+      setSyncStatus('Berhasil mengambil data terbaru dari Google Sheet.');
+      showToast('Data dari Google Sheet berhasil dimuat.');
+    }catch(err){
+      console.error(err);
+      setSyncStatus('Gagal mengambil data. Periksa kembali URL dan pengaturan akses Web App.', true);
+      showToast('Gagal mengambil dari Google Sheet.');
+    }
+  });
+ 
+  var APPS_SCRIPT_CODE = [
+    'function doGet(e) {',
+    '  var ss = SpreadsheetApp.getActiveSpreadsheet();',
+    '  var data = {',
+    '    kelas: readSheetColumn(ss, "Kelas"),',
+    '    mapel: readSheetColumn(ss, "Mapel"),',
+    '    entries: readEntries(ss)',
+    '  };',
+    '  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);',
+    '}',
+    '',
+    'function doPost(e) {',
+    '  var body = JSON.parse(e.postData.contents);',
+    '  var ss = SpreadsheetApp.getActiveSpreadsheet();',
+    '  writeSheetColumn(ss, "Kelas", body.kelas || []);',
+    '  writeSheetColumn(ss, "Mapel", body.mapel || []);',
+    '  writeEntries(ss, body.entries || []);',
+    '  return ContentService.createTextOutput(JSON.stringify({status:"ok"})).setMimeType(ContentService.MimeType.JSON);',
+    '}',
+    '',
+    'function getOrCreateSheet(ss, name) {',
+    '  var sh = ss.getSheetByName(name);',
+    '  if (!sh) sh = ss.insertSheet(name);',
+    '  return sh;',
+    '}',
+    '',
+    'function readSheetColumn(ss, name) {',
+    '  var sh = getOrCreateSheet(ss, name);',
+    '  var values = sh.getDataRange().getValues();',
+    '  var out = [];',
+    '  for (var i = 0; i < values.length; i++) {',
+    '    if (values[i][0]) out.push(String(values[i][0]));',
+    '  }',
+    '  return out;',
+    '}',
+    '',
+    'function writeSheetColumn(ss, name, arr) {',
+    '  var sh = getOrCreateSheet(ss, name);',
+    '  sh.clearContents();',
+    '  if (arr.length) {',
+    '    var rows = arr.map(function (v) { return [v]; });',
+    '    sh.getRange(1, 1, rows.length, 1).setValues(rows);',
+    '  }',
+    '}',
+    '',
+    'var ENTRY_HEADERS = ["id","tanggal","kelas","mapel","jam","guru","kehadiran","materi","kegiatan","catatan"];',
+    '',
+    'function readEntries(ss) {',
+    '  var sh = getOrCreateSheet(ss, "Jurnal");',
+    '  var values = sh.getDataRange().getValues();',
+    '  if (values.length < 2) return [];',
+    '  var headers = values[0];',
+    '  var out = [];',
+    '  for (var i = 1; i < values.length; i++) {',
+    '    var row = values[i];',
+    '    if (!row[0]) continue;',
+    '    var obj = {};',
+    '    for (var j = 0; j < headers.length; j++) {',
+    '      obj[headers[j]] = row[j] !== undefined ? String(row[j]) : "";',
+    '    }',
+    '    out.push(obj);',
+    '  }',
+    '  return out;',
+    '}',
+    '',
+    'function writeEntries(ss, entries) {',
+    '  var sh = getOrCreateSheet(ss, "Jurnal");',
+    '  sh.clearContents();',
+    '  sh.getRange(1, 1, 1, ENTRY_HEADERS.length).setValues([ENTRY_HEADERS]);',
+    '  if (entries.length) {',
+    '    var rows = entries.map(function (e) {',
+    '      return ENTRY_HEADERS.map(function (h) { return e[h] !== undefined ? e[h] : ""; });',
+    '    });',
+    '    sh.getRange(2, 1, rows.length, ENTRY_HEADERS.length).setValues(rows);',
+    '  }',
+    '}'
+  ].join('\n');
+ 
+  /* ---------------- tabs ---------------- */
+  document.querySelectorAll('.tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+ 
+  /* ---------------- select population ---------------- */
+  function populateSelect(sel, items, placeholder){
+    var current = sel.value;
+    sel.innerHTML = '';
+    if(placeholder !== undefined){
+      var o = document.createElement('option');
+      o.value = ''; o.textContent = placeholder;
+      sel.appendChild(o);
+    }
+    items.forEach(function(it){
+      var opt = document.createElement('option');
+      opt.value = it; opt.textContent = it;
+      sel.appendChild(opt);
+    });
+    if(items.indexOf(current) !== -1 || current === '') sel.value = current;
+  }
+ 
+  function refreshAllSelects(){
+    populateSelect(document.getElementById('f_kelas'), state.kelas);
+    populateSelect(document.getElementById('f_mapel'), state.mapel);
+    populateSelect(document.getElementById('filterKelas'), state.kelas, 'Semua kelas');
+    populateSelect(document.getElementById('filterMapel'), state.mapel, 'Semua mapel');
+    populateSelect(document.getElementById('p_kelas'), state.kelas, 'Semua kelas');
+    populateSelect(document.getElementById('p_mapel'), state.mapel, 'Semua mapel');
+  }
+ 
+  /* ---------------- entry form ---------------- */
+  var form = document.getElementById('entryForm');
+  var cancelEditBtn = document.getElementById('cancelEditBtn');
+ 
+  function resetForm(){
+    form.reset();
+    document.getElementById('f_tanggal').value = todayStr();
+    state.editingId = null;
+    document.getElementById('formModeTitle').textContent = 'Tulis entri jurnal baru';
+    document.getElementById('submitBtn').textContent = '';
+    var svgAdd = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Simpan entri';
+    document.getElementById('submitBtn').innerHTML = svgAdd;
+    cancelEditBtn.style.display = 'none';
+  }
+ 
+  cancelEditBtn.addEventListener('click', resetForm);
+ 
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var entry = {
+      id: state.editingId || uid(),
+      tanggal: document.getElementById('f_tanggal').value,
+      kelas: document.getElementById('f_kelas').value,
+      mapel: document.getElementById('f_mapel').value,
+      jam: document.getElementById('f_jam').value.trim(),
+      guru: document.getElementById('f_guru').value.trim(),
+      kehadiran: document.getElementById('f_kehadiran').value.trim(),
+      materi: document.getElementById('f_materi').value.trim(),
+      kegiatan: document.getElementById('f_kegiatan').value.trim(),
+      catatan: document.getElementById('f_catatan').value.trim()
+    };
+    if(state.editingId){
+      var idx = state.entries.findIndex(function(x){ return x.id === state.editingId; });
+      if(idx !== -1) state.entries[idx] = entry;
+      showToast('Entri jurnal diperbarui.');
+    }else{
+      state.entries.unshift(entry);
+      showToast('Entri jurnal disimpan.');
+    }
+    saveState();
+    resetForm();
+    renderEntryTable();
+  });
+ 
+  function startEdit(id){
+    var e = state.entries.find(function(x){ return x.id === id; });
+    if(!e) return;
+    document.getElementById('f_tanggal').value = e.tanggal;
+    document.getElementById('f_kelas').value = e.kelas;
+    document.getElementById('f_mapel').value = e.mapel;
+    document.getElementById('f_jam').value = e.jam;
+    document.getElementById('f_guru').value = e.guru;
+    document.getElementById('f_kehadiran').value = e.kehadiran || '';
+    document.getElementById('f_materi').value = e.materi;
+    document.getElementById('f_kegiatan').value = e.kegiatan;
+    document.getElementById('f_catatan').value = e.catatan || '';
+    state.editingId = id;
+    document.getElementById('formModeTitle').textContent = 'Mengubah entri jurnal';
+    document.getElementById('submitBtn').innerHTML = 'Perbarui entri';
+    cancelEditBtn.style.display = 'inline-flex';
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+ 
+  var pendingDelete = null;
+  function requestDeleteEntry(id){
+    pendingDelete = { type:'entry', id: id };
+    document.getElementById('confirmTitle').textContent = 'Hapus entri jurnal?';
+    document.getElementById('confirmText').textContent = 'Entri yang dihapus tidak dapat dikembalikan.';
+    document.getElementById('confirmModal').classList.add('show');
+  }
+ 
+  document.getElementById('confirmYes').addEventListener('click', function(){
+    if(pendingDelete && pendingDelete.type === 'entry'){
+      state.entries = state.entries.filter(function(x){ return x.id !== pendingDelete.id; });
+      saveState();
+      renderEntryTable();
+      showToast('Entri dihapus.');
+    }else if(pendingDelete && pendingDelete.type === 'kelas'){
+      state.kelas = state.kelas.filter(function(x){ return x !== pendingDelete.id; });
+      saveState();
+      renderManageLists();
+      refreshAllSelects();
+      showToast('Kelas dihapus.');
+    }else if(pendingDelete && pendingDelete.type === 'mapel'){
+      state.mapel = state.mapel.filter(function(x){ return x !== pendingDelete.id; });
+      saveState();
+      renderManageLists();
+      refreshAllSelects();
+      showToast('Mata pelajaran dihapus.');
+    }
+    pendingDelete = null;
+    document.getElementById('confirmModal').classList.remove('show');
+  });
+  document.getElementById('confirmNo').addEventListener('click', function(){
+    pendingDelete = null;
+    document.getElementById('confirmModal').classList.remove('show');
+  });
+ 
+  /* ---------------- render entry table ---------------- */
+  function getFilteredEntries(){
+    var kelas = document.getElementById('filterKelas').value;
+    var mapel = document.getElementById('filterMapel').value;
+    var cari = document.getElementById('filterCari').value.trim().toLowerCase();
+    return state.entries.filter(function(e){
+      if(kelas && e.kelas !== kelas) return false;
+      if(mapel && e.mapel !== mapel) return false;
+      if(cari && e.materi.toLowerCase().indexOf(cari) === -1 && e.kegiatan.toLowerCase().indexOf(cari) === -1) return false;
+      return true;
+    }).sort(function(a,b){ return b.tanggal.localeCompare(a.tanggal); });
+  }
+ 
+  function renderEntryTable(){
+    var list = getFilteredEntries();
+    var tbody = document.getElementById('entryTableBody');
+    var empty = document.getElementById('emptyState');
+    var wrap = document.getElementById('ledgerWrap');
+    if(list.length === 0){
+      tbody.innerHTML = '';
+      wrap.style.display = 'none';
+      empty.style.display = 'block';
+      return;
+    }
+    wrap.style.display = 'block';
+    empty.style.display = 'none';
+    tbody.innerHTML = list.map(function(e){
+      return '<tr>' +
+        '<td data-label="Tanggal" class="cell-date">' + fmtTanggalSingkat(e.tanggal) + '</td>' +
+        '<td data-label="Kelas"><span class="tag">' + escapeHtml(e.kelas) + '</span></td>' +
+        '<td data-label="Mapel">' + escapeHtml(e.mapel) + '</td>' +
+        '<td data-label="Jam">' + escapeHtml(e.jam) + '</td>' +
+        '<td data-label="Materi">' + escapeHtml(e.materi) + '</td>' +
+        '<td data-label="Guru">' + escapeHtml(e.guru) + '</td>' +
+        '<td data-label="">' +
+          '<div class="row-actions">' +
+            '<button class="icon-btn" title="Cetak entri ini" data-print="' + e.id + '"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18h12v4H6z"/><path d="M6 14H4a2 2 0 01-2-2v-3a2 2 0 012-2h16a2 2 0 012 2v3a2 2 0 01-2 2h-2"/></svg></button>' +
+            '<button class="icon-btn" title="Ubah entri" data-edit="' + e.id + '"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></button>' +
+            '<button class="icon-btn danger" title="Hapus entri" data-del="' + e.id + '"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+ 
+    tbody.querySelectorAll('[data-edit]').forEach(function(b){
+      b.addEventListener('click', function(){ startEdit(b.dataset.edit); });
+    });
+    tbody.querySelectorAll('[data-del]').forEach(function(b){
+      b.addEventListener('click', function(){ requestDeleteEntry(b.dataset.del); });
+    });
+    tbody.querySelectorAll('[data-print]').forEach(function(b){
+      b.addEventListener('click', function(){ printSingleEntry(b.dataset.print); });
+    });
+  }
+ 
+  document.getElementById('filterKelas').addEventListener('change', renderEntryTable);
+  document.getElementById('filterMapel').addEventListener('change', renderEntryTable);
+  document.getElementById('filterCari').addEventListener('input', renderEntryTable);
+ 
+  /* ---------------- kelola kelas & mapel ---------------- */
+  function renderManageList(containerId, items, type){
+    var ul = document.getElementById(containerId);
+    ul.innerHTML = items.map(function(name, idx){
+      return '<li data-idx="' + idx + '">' +
+        '<input type="text" value="' + escapeHtml(name) + '" data-original="' + escapeHtml(name) + '">' +
+        '<button class="icon-btn" title="Simpan" data-save="' + idx + '"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></button>' +
+        '<button class="icon-btn danger" title="Hapus" data-remove="' + idx + '"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>' +
+      '</li>';
+    }).join('');
+ 
+    ul.querySelectorAll('[data-save]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var li = btn.closest('li');
+        var input = li.querySelector('input');
+        var newVal = input.value.trim();
+        var oldVal = input.dataset.original;
+        if(!newVal){ showToast('Nama tidak boleh kosong.'); return; }
+        if(newVal === oldVal) return;
+        var arr = type === 'kelas' ? state.kelas : state.mapel;
+        var i = arr.indexOf(oldVal);
+        if(i !== -1){
+          arr[i] = newVal;
+          // perbarui entri yang memakai nama lama
+          state.entries.forEach(function(e){
+            if(type === 'kelas' && e.kelas === oldVal) e.kelas = newVal;
+            if(type === 'mapel' && e.mapel === oldVal) e.mapel = newVal;
+          });
+          saveState();
+          renderManageLists();
+          refreshAllSelects();
+          renderEntryTable();
+          showToast((type === 'kelas' ? 'Kelas' : 'Mata pelajaran') + ' diperbarui.');
+        }
+      });
+    });
+    ul.querySelectorAll('[data-remove]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var li = btn.closest('li');
+        var input = li.querySelector('input');
+        pendingDelete = { type: type, id: input.dataset.original };
+        document.getElementById('confirmTitle').textContent = 'Hapus ' + (type === 'kelas' ? 'kelas' : 'mata pelajaran') + ' ini?';
+        document.getElementById('confirmText').textContent = 'Entri jurnal yang sudah memakai data ini tidak akan terhapus, hanya daftar pilihannya.';
+        document.getElementById('confirmModal').classList.add('show');
+      });
+    });
+  }
+ 
+  function renderManageLists(){
+    renderManageList('kelasList', state.kelas, 'kelas');
+    renderManageList('mapelList', state.mapel, 'mapel');
+    document.getElementById('kelasCount').textContent = state.kelas.length;
+    document.getElementById('mapelCount').textContent = state.mapel.length;
+  }
+ 
+  document.getElementById('addKelasBtn').addEventListener('click', function(){
+    var input = document.getElementById('newKelasInput');
+    var val = input.value.trim();
+    if(!val){ showToast('Isi nama kelas terlebih dahulu.'); return; }
+    if(state.kelas.indexOf(val) !== -1){ showToast('Kelas sudah ada.'); return; }
+    state.kelas.push(val);
+    input.value = '';
+    saveState();
+    renderManageLists();
+    refreshAllSelects();
+    showToast('Kelas ditambahkan.');
+  });
+  document.getElementById('addMapelBtn').addEventListener('click', function(){
+    var input = document.getElementById('newMapelInput');
+    var val = input.value.trim();
+    if(!val){ showToast('Isi nama mata pelajaran terlebih dahulu.'); return; }
+    if(state.mapel.indexOf(val) !== -1){ showToast('Mata pelajaran sudah ada.'); return; }
+    state.mapel.push(val);
+    input.value = '';
+    saveState();
+    renderManageLists();
+    refreshAllSelects();
+    showToast('Mata pelajaran ditambahkan.');
+  });
+ 
+  /* ---------------- cetak ---------------- */
+  function buildPrintHtml(list, meta){
+    var rentang = '';
+    if(meta.dari && meta.sampai){
+      rentang = fmtTanggalSingkat(meta.dari) + ' s.d. ' + fmtTanggalSingkat(meta.sampai);
+    }else if(meta.dari){
+      rentang = 'Mulai ' + fmtTanggalSingkat(meta.dari);
+    }else if(meta.sampai){
+      rentang = 'Sampai ' + fmtTanggalSingkat(meta.sampai);
+    }else{
+      rentang = 'Seluruh periode';
+    }
+    var filterInfo = [];
+    filterInfo.push('Periode: ' + rentang);
+    filterInfo.push('Kelas: ' + (meta.kelas || 'Semua kelas'));
+    filterInfo.push('Mapel: ' + (meta.mapel || 'Semua mata pelajaran'));
+ 
+    var rows = list.map(function(e, i){
+      return '<tr>' +
+        '<td>' + (i+1) + '</td>' +
+        '<td>' + fmtTanggal(e.tanggal) + '</td>' +
+        '<td>' + escapeHtml(e.kelas) + '</td>' +
+        '<td>' + escapeHtml(e.mapel) + '</td>' +
+        '<td>' + escapeHtml(e.jam) + '</td>' +
+        '<td>' + escapeHtml(e.materi) + '</td>' +
+        '<td>' + escapeHtml(e.kegiatan) + '</td>' +
+        '<td>' + escapeHtml(e.catatan || '-') + '</td>' +
+      '</tr>';
+    }).join('');
+ 
+    if(list.length === 0){
+      rows = '<tr><td colspan="8" style="text-align:center;padding:16px;">Tidak ada entri jurnal pada periode/filter yang dipilih.</td></tr>';
+    }
+ 
+    var todayLabel = fmtTanggal(todayStr());
+    var guruNama = meta.guruNama || '(.....................................)';
+    var guruNip = meta.guruNip ? ('NIP. ' + meta.guruNip) : 'NIP. .....................................';
+    var kepalaNama = meta.kepalaNama || '(.....................................)';
+    var kepalaNip = meta.kepalaNip ? ('NIP. ' + meta.kepalaNip) : 'NIP. .....................................';
+    var logoHtml = state.logo
+      ? '<img src="' + state.logo + '" alt="Logo" style="width:64px;height:64px;object-fit:contain;flex:none;">'
+      : '<div style="width:64px;flex:none;"></div>';
+ 
+    return (
+      '<div class="kop" style="display:flex;align-items:center;gap:14px;text-align:left;">' +
+        logoHtml +
+        '<div style="flex:1;text-align:center;">' +
+          '<div class="k1">KEMENTERIAN AGAMA REPUBLIK INDONESIA</div>' +
+          '<div class="k2">MADRASAH TSANAWIYAH NEGERI 1 PRINGSEWU</div>' +
+          '<div class="k3">Jl. Kesehatan No. 128 Kel. Pringsewu Selatan Kec. Pringsewu Kab. Pringsewu Prov. Lampung</div>' +
+        '</div>' +
+        '<div style="width:64px;flex:none;"></div>' +
+      '</div>' +
+      '<div class="print-title">JURNAL PEMBELAJARAN GURU</div>' +
+      '<div class="print-meta">' + filterInfo.join(' &nbsp;|&nbsp; ') + '</div>' +
+      '<table class="print-table">' +
+        '<thead><tr>' +
+          '<th style="width:28px;">No</th><th>Hari/Tanggal</th><th>Kelas</th><th>Mapel</th><th>Jam</th>' +
+          '<th>Materi/KD</th><th>Kegiatan Pembelajaran</th><th>Catatan</th>' +
+        '</tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>' +
+      '<div class="sign-block">' +
+        '<div class="sign">Guru Mata Pelajaran<div class="space"></div>' + escapeHtml(guruNama) + '<br>' + escapeHtml(guruNip) + '</div>' +
+        '<div class="sign">Pringsewu, ' + todayLabel + '<br>Kepala Madrasah<div class="space"></div>' + escapeHtml(kepalaNama) + '<br>' + escapeHtml(kepalaNip) + '</div>' +
+      '</div>'
+    );
+  }
+ 
+  var SIGNER_KEY = 'jurnal-guru-penandatangan-v1';
+  var signerFieldIds = ['p_guru_nama','p_guru_nip','p_kepala_nama','p_kepala_nip'];
+ 
+  async function loadSignerInfo(){
+    try{
+      var res = await localStore.get(SIGNER_KEY);
+      if(res && res.value){
+        var data = JSON.parse(res.value);
+        signerFieldIds.forEach(function(id){
+          if(data[id]) document.getElementById(id).value = data[id];
+        });
+      }
+    }catch(err){
+      // belum pernah diisi
+    }
+  }
+ 
+  function saveSignerInfo(){
+    var data = {};
+    signerFieldIds.forEach(function(id){
+      data[id] = document.getElementById(id).value.trim();
+    });
+    localStore.set(SIGNER_KEY, JSON.stringify(data));
+  }
+ 
+  signerFieldIds.forEach(function(id){
+    document.getElementById(id).addEventListener('change', saveSignerInfo);
+  });
+ 
+  function getPrintFilterMeta(){
+    return {
+      dari: document.getElementById('p_dari').value,
+      sampai: document.getElementById('p_sampai').value,
+      kelas: document.getElementById('p_kelas').value,
+      mapel: document.getElementById('p_mapel').value,
+      guruNama: document.getElementById('p_guru_nama').value.trim(),
+      guruNip: document.getElementById('p_guru_nip').value.trim(),
+      kepalaNama: document.getElementById('p_kepala_nama').value.trim(),
+      kepalaNip: document.getElementById('p_kepala_nip').value.trim()
+    };
+  }
+ 
+  function getPrintFilteredEntries(meta){
+    return state.entries.filter(function(e){
+      if(meta.dari && e.tanggal < meta.dari) return false;
+      if(meta.sampai && e.tanggal > meta.sampai) return false;
+      if(meta.kelas && e.kelas !== meta.kelas) return false;
+      if(meta.mapel && e.mapel !== meta.mapel) return false;
+      return true;
+    }).sort(function(a,b){ return a.tanggal.localeCompare(b.tanggal); });
+  }
+ 
+  document.getElementById('previewBtn').addEventListener('click', function(){
+    var meta = getPrintFilterMeta();
+    var list = getPrintFilteredEntries(meta);
+    var wrap = document.getElementById('previewWrap');
+    wrap.innerHTML = buildPrintHtml(list, meta);
+    wrap.style.display = 'block';
+  });
+ 
+  document.getElementById('printBtn').addEventListener('click', function(){
+    var meta = getPrintFilterMeta();
+    var list = getPrintFilteredEntries(meta);
+    document.getElementById('print-area').innerHTML = buildPrintHtml(list, meta);
+    window.print();
+  });
+ 
+  function printSingleEntry(id){
+    var e = state.entries.find(function(x){ return x.id === id; });
+    if(!e) return;
+    var meta = {
+      dari:'', sampai:'', kelas:'', mapel:'',
+      guruNama: e.guru || document.getElementById('p_guru_nama').value.trim(),
+      guruNip: document.getElementById('p_guru_nip').value.trim(),
+      kepalaNama: document.getElementById('p_kepala_nama').value.trim(),
+      kepalaNip: document.getElementById('p_kepala_nip').value.trim()
+    };
+    document.getElementById('print-area').innerHTML = buildPrintHtml([e], meta);
+    window.print();
+  }
+ 
+  /* ---------------- masthead date ---------------- */
+  document.getElementById('mastheadDate').textContent = fmtTanggal(todayStr());
+ 
+  /* ---------------- init ---------------- */
+  async function init(){
+    document.getElementById('f_tanggal').value = todayStr();
+    await loadState();
+    await loadSyncUrl();
+    await loadLogo();
+    await loadSignerInfo();
+    refreshAllSelects();
+    renderManageLists();
+    renderEntryTable();
+  }
+  init();
+ 
+})();
+</script>
+</body>
+</html>
+ 
